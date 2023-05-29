@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        height: 100%;
+        background-image: linear-gradient(to top, #78c7d2 0%, #efadeb 100%);
+        font: 600 16px/18px 'Open Sans', sans-serif;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+      }
+
+      #MainResult {
+        /* margin-top: 200px; */
+        /* background-color: white; */
+        align-items: center;
+        width: 70%;
+        height: 30vh;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      #Title {
+        font-size: 40px;
+        font-weight: bold;
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: 300;
+        text-align: center;
+        margin-top: 10%;
+        margin-bottom: 15px;
+        text-shadow: 2px 2px 4px gray;
+      }
+
+      table {
+        width: 100%;
+        /* table-layout: fixed; */
+      }
+
+      .tbl-header {
+        background-color: rgba(255, 255, 255, 0.247);
+      }
+
+      .tbl-content {
+        height: 800px;
+        overflow-x: auto;
+        margin-top: 0;
+        border: 1px solid rgba(255, 255, 255, 0.457);
+      }
+
+
+
+      #TablePercent {
+        width: 130px;
+      }
+
+      th {
+        padding: 10px;
+        text-align: center;
+        font-size: 13px;
+        color: #fff;
+        text-transform: uppercase;
+      }
+
+      td {
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 10px;
+        text-align: center;
+        vertical-align: middle;
+        font-weight: 300;
+        font-size: 17px;
+        color: #fff;
+        border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+      }
+
+      /* section{
+    margin: 50px;
+    } */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      }
+
+      .buttonarea {
+        margin-top: 10px;
+        text-align: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 20px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      button {
+        margin: 0 5px;
+      }
+
+      .button-return {
+        border-color: #ffffff;
+        color: rgb(135, 135, 135);
+        padding: 10px 20px;
+        width: 120px;
+        background: #ffffff;
+        font-size: 15px;
+        display: flex;
+        justify-content: center;
+        border-radius: 50px;
+      }
+
+      .button-board {
+        border-color: rgb(135, 135, 135);
+        color: white;
+        padding: 10px 20px;
+        width: 120px;
+        background: rgb(135, 135, 135);
+        font-size: 15px;
+        display: flex;
+        justify-content: center;
+        border-radius: 50px;
+      }
+
+      #td-percent {
+        width: 130px;
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <div class='buttonarea'>
+      <form action="{% url 'boards:returntoregister' %}" method="get">
+        <button class="button-return">
+          <span>Main</span></button>
+      </form>
+      <form action="{% url 'boards:start' %}" method="get">
+        <button class="button-board">
+          <span>Log out</span></button>
+      </form>
+    </div>
+
+    <div id="Title">
+      <h1>BOARD</h1>
+    </div>
+
+    <div id="MainResult">
+      <section>
+        <!-- <h1 id="HeadTitle">BOARD</h1> -->
+        <div class="tbl-header">
+          <table cellpadding="0" cellspacing="0">
+            <thead>
+              <tr>
+                <th id="TableTitle">
+                  <h1>TITLE</h1>
+                </th>
+                <th id="TablePercent">
+                  <h1>PERCENT</h1>
+                </th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="tbl-content">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tbody>
+              {% for board in boards %}
+                <tr>
+                  <td>
+                    <a href="{% url 'boards:detail' board.pk %}">{{board.title}}</a>
+                  </td>
+                  <td>{{board.percent}}%</td>
+
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    $(window)
+      .on("load resize ", function () {
+        var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
+        $('.tbl-header').css({'padding-right': scrollWidth});
+      })
+      .resize();
+  </script>
+
+</html>
